@@ -18,5 +18,14 @@ pipeline {
                 }
             }
         }
+        stage('List AWS Resources') {
+            steps {
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId:'dba-user', secretKeyValueVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    timeout(time: 60, unit: "MINUTES") {
+                        sh  'aws s3 ls'
+                    }
+                }
+            }
+        }
     }
 }
