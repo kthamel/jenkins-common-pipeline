@@ -3,10 +3,6 @@
 pipeline {
     agent any {
         withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId:'dba-user', secretKeyValueVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                    withGroovy {
-                        tfapply()
-                    }
-                }
         stages {
             stage('Hello Directly') {
                 steps {
