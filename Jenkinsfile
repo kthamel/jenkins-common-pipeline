@@ -25,5 +25,12 @@ pipeline {
                 }
             }
         }
+        stage('Check Terraform version') {
+            steps {
+                withGroovy {
+                    terraformInit()
+                }
+            }
+        }
     }
 }
