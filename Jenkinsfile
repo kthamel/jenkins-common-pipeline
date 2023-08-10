@@ -5,30 +5,47 @@ pipeline {
     stages {
         stage('Hello Directly') {
             steps {
-                withGroovy {  
+                withGroovy {
                     sh 'java --version'
                     sh 'groovy --version'
+                    sh 'terraform --version'
+                    sh 'aws --version'
                 }
             }
         }
-        stage('Hello from Library') {
+
+        stage('Terraform Initialization') {
             steps {
                 withGroovy {
-                    helloWorld("Kushan","Tuesday")
+                    tfinit()
                 }
             }
         }
-        stage('List AWS Resources') {
+
+        stage('Terraform Validation') {
+            steps {
+                withGroovy {
+                    tfvalidate()
+                }
+            }
+        }
+
+        stage('Terraform Plan') {
             steps {
                 withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId:'dba-user', secretKeyValueVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                    sh  'aws s3 ls'
+                    withGroovy {
+                        tfplan()
+                    }
                 }
             }
         }
-        stage('Check Terraform version') {
+
+        stage('Terraform Apply') {
             steps {
-                withGroovy {
-                    terraformInit()
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId:'dba-user', secretKeyValueVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    withGroovy {
+                        tfapply()
+                    }
                 }
             }
         }
