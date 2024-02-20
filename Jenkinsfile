@@ -1,15 +1,11 @@
-// @Library("jenkins-groovy-library") _
 pipeline {
     agent any
 
     stages {
-        stage('Hello Directly') {
+        stage('Hello') {
             steps {
-                withGroovy {
-                    sh 'java --version'
-                }
+                echo 'Hello World'
             }
         }
     }
-        
 }
