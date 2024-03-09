@@ -16,3 +16,11 @@ pipeline {
         }
     }
 }
+
+def secrets = [
+    [path: 'secret/jenkins/ad_pass', secretValues: [
+            [vaultKey: 'username'],
+            [vaultKey: 'password']
+            ]
+        ]
+    ]
