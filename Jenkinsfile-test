@@ -1,0 +1,18 @@
+pipeline {
+    agent {label 'ansible'}
+    environment {
+        ANSIBLE_KEY=credentials('ANSIBLE_KEY')
+    }
+    stages {
+        stage('Versions'){
+            steps {
+                sh '''
+                    ansible --version
+                    ansible-playbook --version
+                    ansible-galaxy --version
+                    ansible-lint --version
+                '''
+            }
+        }
+    }
+}
