@@ -5,7 +5,9 @@ pipeline {
         stage('Invoke_Develop_Credentials') {
             steps {
                 withCredentials([[$class: 'VaultUsernamePasswordCredentialBinding', credentialsId: 'vault-jenkins', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME']]) {
-                    sh 'echo $PASSWORD'
+                    sh '''
+                        echo $PASSWORD > tmp_1'
+                    '''
                 }  
             }
         }
@@ -14,7 +16,7 @@ pipeline {
             steps {
                 withCredentials([vaultString(credentialsId: 'ansible_key', variable: 'PRIVATE_KEY')]) {
                     sh  '''
-                        echo $PRIVATE_KEY > tmp
+                        echo $PRIVATE_KEY > tmp_2
                     '''
                 } 
             }
