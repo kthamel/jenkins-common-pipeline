@@ -17,7 +17,6 @@ pipeline {
                         echo $PRIVATE_KEY > tmp
                     '''
                 } 
-                sh 'cat tmp'
             }
         }
     }
