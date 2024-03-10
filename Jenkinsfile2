@@ -6,7 +6,7 @@ pipeline {
             steps {
                 withCredentials([[$class: 'VaultUsernamePasswordCredentialBinding', credentialsId: 'vault-jenkins', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME']]) {
                     sh '''
-                        echo $PASSWORD > tmp_1'
+                        echo $PASSWORD > tmp_1
                     '''
                 }  
             }
