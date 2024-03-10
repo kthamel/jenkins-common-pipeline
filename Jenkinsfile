@@ -12,7 +12,7 @@ pipeline {
 
         stage('Invoke_Ansible_Credentials') {
             steps {
-                withCredentials([[$class: 'VaultUsernamePasswordCredentialBinding', credentialsId: 'ansible_key', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME']]) {
+                withCredentials([[$class: 'VaultUsernamePasswordCredential', credentialsId: 'ansible_key', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME']]) {
                     sh 'echo $ANSIBLE_KEY'
                 }  
             }
