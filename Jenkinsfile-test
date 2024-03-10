@@ -1,26 +1,15 @@
 pipeline {
-    agent {label 'ansible'}
-    environment {
-        ANSIBLE_KEY=credentials('ANSIBLE_KEY')
-    }
+    agent any
+
     stages {
-        stage('Versions'){
+        stage('Invoke_Credentials') {
             steps {
-                sh '''
-                    ansible --version
-                    ansible-playbook --version
-                    ansible-galaxy --version
-                    ansible-lint --version
-                '''
+                withCredentials([[$class: 'VaultUsernamePasswordCredentialBinding', credentialsId: 'vault-jenkins', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME']]) {
+                    sh 'echo $PASSWORD'
+                }  
             }
         }
     }
 }
 
-def secrets = [
-    [path: 'secret/jenkins/ad_pass', secretValues: [
-            [vaultKey: 'username'],
-            [vaultKey: 'password']
-            ]
-        ]
-    ]
+# new-static-v2/creds/ansible
