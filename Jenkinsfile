@@ -4,9 +4,9 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                withCredentials([vaultString(credentialsId: 'vault-jenkins', variable: '')]) {
-                    sh 'echo Hello'
-                }   
+                withCredentials([[$class: 'VaultUsernamePasswordCredentialBinding', credentialsId: 'vault-jenkins', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME']]) {
+                    sh 'echo $PASSWORD'
+                }  
             }
         }
     }
