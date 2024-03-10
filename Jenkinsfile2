@@ -13,8 +13,8 @@ pipeline {
         stage('Invoke_Ansible_Credentials') {
             steps {
                 withCredentials([vaultString(credentialsId: 'ansible_key', variable: 'PRIVATE_KEY')]) {
-                    '''
-                    sh 'echo $PRIVATE_KEY > tmp'
+                    sh  '''
+                        echo $PRIVATE_KEY > tmp
                     '''
                 } 
                 sh 'cat tmp'
