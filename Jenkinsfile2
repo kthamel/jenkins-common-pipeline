@@ -12,9 +12,12 @@ pipeline {
 
         stage('Invoke_Ansible_Credentials') {
             steps {
-                withCredentials([vaultString(credentialsId: 'ansible_key', variable: '')]) {
-                    sh 'echo $ansible_key'
+                withCredentials([vaultString(credentialsId: 'ansible_key', variable: 'PRIVATE_KEY')]) {
+                    '''
+                    sh 'echo $PRIVATE_KEY > tmp'
+                    '''
                 } 
+                sh 'cat tmp'
             }
         }
     }
